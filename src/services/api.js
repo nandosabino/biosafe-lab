@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000/api/scores";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export async function salvarRankingAPI(nome, pontuacao) {
 	await fetch(API_URL, {
