@@ -3,7 +3,29 @@ import { useEffect, useRef, useState } from "react";
 import ProgressBar from "../components/ProgressBar";
 import { perguntas } from "../data/perguntas";
 
+function embaralharPerguntas(perguntas) {
+  return perguntas.map((p) => {
+    const opcoesEmbaralhadas = p.opcoes
+      .map((opcao, index) => ({
+        text: opcao,
+        originalIndex: index,
+      }))
+      .sort(() => Math.random() - 0.5);
+
+    const novaCorreta = opcoesEmbaralhadas.findIndex(
+      (op) => op.originalIndex === p.correta,
+    );
+
+    return {
+      ...p,
+      opcoes: opcoesEmbaralhadas.map((op) => op.text),
+      correta: novaCorreta,
+    };
+  });
+}
+
 export default function Jogo({ finalizar }) {
+  const [perguntasJogo, setPerguntasJogo] = useState([]);
   const [indice, setIndice] = useState(0);
   const [pontuacao, setPontuacao] = useState(0);
   const [mostrarResposta, setMostrarResposta] = useState(false);
@@ -18,6 +40,10 @@ export default function Jogo({ finalizar }) {
   useEffect(() => {
     const audio = new Audio("/sound-effect1.mp3");
     somAcerto.current = audio;
+  }, []);
+
+  useEffect(() => {
+    setPerguntasJogo(embaralharPerguntas(perguntas));
   }, []);
 
   useEffect(() => {
@@ -64,6 +90,8 @@ export default function Jogo({ finalizar }) {
   }
 
   const pergunta = perguntas[indice];
+
+  if (!pergunta) return null;
 
   return (
     <div className="relative h-screen flex items-center justify-center overflow-hidden">
