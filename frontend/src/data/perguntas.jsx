@@ -29,4 +29,46 @@ export const perguntas = [
     explicacao:
       "Alertar colegas ajuda a manter a segurança coletiva no laboratório.",
   },
+  {
+    pergunta:
+      "Você esqueceu de prender o cabelo antes de entrar no laboratório. O que fazer?",
+    opcoes: [
+      "Entrar assim mesmo",
+      "Prender o cabelo antes de entrar",
+      "Colocar só uma touca por cima",
+    ],
+    correta: 1,
+  },
+  {
+    pergunta: "Você derrubou um reagente no chão. Qual a atitude correta?",
+    opcoes: [
+      "Ignorar e continuar",
+      "Limpar com papel comum",
+      "Avisar e limpar com o procedimento adequado",
+    ],
+    correta: 2,
+  },
+  {
+    pergunta: "Você está usando luvas e precisa mexer no celular. O que fazer?",
+    opcoes: [
+      "Usar o celular normalmente",
+      "Tirar as luvas antes",
+      "Limpar a luva e usar",
+    ],
+    correta: 1,
+  },
+  {
+    pergunta: "Após terminar o experimento, o que fazer com os resíduos?",
+    opcoes: [
+      "Jogar tudo no lixo comum",
+      "Descartar conforme o tipo de resíduo",
+      "Deixar na bancada",
+    ],
+    correta: 1,
+  },
+  {
+    pergunta: "Você percebe um colega sem EPI. O que fazer?",
+    opcoes: ["Ignorar", "Avisar o colega", "Rir da situação"],
+    correta: 1,
+  },
 ];

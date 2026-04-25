@@ -4,11 +4,18 @@ import { getRanking } from "../services/api";
 
 export default function Ranking({ voltar }) {
   const [ranking, setRanking] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function carregar() {
-      const data = await getRanking();
-      setRanking(data);
+      try {
+        const data = await getRanking();
+        setRanking(data);
+      } catch (err) {
+        console.error("Erro ao buscar ranking:", err);
+      } finally {
+        setLoading(false);
+      }
     }
 
     carregar();
@@ -30,7 +37,17 @@ export default function Ranking({ voltar }) {
         <h1 className="text-2xl font-bold text-center">🏆 Ranking</h1>
 
         <div className="flex flex-col gap-2">
-          {ranking.length === 0 && (
+          {loading && (
+            <motion.div
+              animate={{ opacity: [0.4, 1, 0.4] }}
+              transition={{ repeat: Infinity, duration: 1.2 }}
+              className="text-gray-300 text-center text-sm"
+            >
+              ⏳ Carregando ranking...
+            </motion.div>
+          )}
+
+          {!loading && ranking.length === 0 && (
             <p className="text-gray-400 text-center text-sm">
               Nenhum jogador ainda
             </p>
