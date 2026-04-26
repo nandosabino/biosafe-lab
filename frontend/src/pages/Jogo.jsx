@@ -30,6 +30,7 @@ export default function Jogo({ finalizar }) {
   const [mostrarResposta, setMostrarResposta] = useState(false);
   const [respostaSelecionada, setRespostaSelecionada] = useState(null);
   const [respondido, setRespondido] = useState(false);
+  const [acabou, setAcabou] = useState(false);
 
   const TEMPO_MAX = 20;
   const [tempo, setTempo] = useState(TEMPO_MAX);
@@ -48,7 +49,7 @@ export default function Jogo({ finalizar }) {
   }, []);
 
   useEffect(() => {
-    if (mostrarResposta) return;
+    if (mostrarResposta || respondido || acabou) return;
 
     if (tempo <= 0) {
       setMostrarResposta(true);
@@ -59,7 +60,7 @@ export default function Jogo({ finalizar }) {
 
     const timer = setTimeout(() => setTempo((t) => t - 1), 1000);
     return () => clearTimeout(timer);
-  }, [tempo, mostrarResposta]);
+  }, [tempo, mostrarResposta, respondido, acabou]);
 
   useEffect(() => {
     setTempo(TEMPO_MAX);
@@ -83,19 +84,22 @@ export default function Jogo({ finalizar }) {
   }
 
   function proximaPergunta() {
-    setMostrarResposta(false);
-    setRespostaSelecionada(null);
-    setRespondido(false);
+    if (acabou) return;
 
     if (indice + 1 < perguntasJogo.length) {
-      setIndice(indice + 1);
+      setMostrarResposta(false);
+      setRespostaSelecionada(null);
+      setRespondido(false);
+      setIndice((prev) => prev + 1);
     } else {
+      setAcabou(true);
       finalizar(pontuacao);
     }
   }
 
   const pergunta = perguntasJogo[indice];
 
+  if (acabou) return null;
   if (!pergunta) return null;
 
   return (
