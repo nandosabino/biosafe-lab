@@ -32,11 +32,11 @@ export default function Ranking({ voltar }) {
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="bg-white/10 backdrop-blur-2xl border border-white/20 shadow-[0_0_40px_rgba(0,255,255,0.1)] rounded-3xl px-8 py-10 flex flex-col gap-6 max-w-sm w-full"
+        className="bg-white/10 backdrop-blur-2xl border border-white/20 shadow-[0_0_40px_rgba(0,255,255,0.1)] rounded-3xl px-6 py-8 flex flex-col gap-4 max-w-xs w-full"
       >
         <h1 className="text-2xl font-bold text-center">🏆 Ranking</h1>
 
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 max-h-[40vh] overflow-y-auto pr-2">
           {loading && (
             <motion.div
               animate={{ opacity: [0.4, 1, 0.4] }}

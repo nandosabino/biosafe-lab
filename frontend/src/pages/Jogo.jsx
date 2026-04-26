@@ -2,26 +2,25 @@ import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import ProgressBar from "../components/ProgressBar";
 import { perguntas } from "../data/perguntas";
+import { embaralhar } from "../utils/embaralhar";
 
-function embaralharPerguntas(perguntas) {
-  return perguntas.map((p) => {
-    const opcoesEmbaralhadas = p.opcoes
-      .map((opcao, index) => ({
-        text: opcao,
-        originalIndex: index,
-      }))
-      .sort(() => Math.random() - 0.5);
+function embaralharPergunta(p) {
+  const opcoesComIndex = p.opcoes.map((opcao, index) => ({
+    text: opcao,
+    originalIndex: index,
+  }));
 
-    const novaCorreta = opcoesEmbaralhadas.findIndex(
-      (op) => op.originalIndex === p.correta,
-    );
+  const embaralhadas = embaralhar(opcoesComIndex);
 
-    return {
-      ...p,
-      opcoes: opcoesEmbaralhadas.map((op) => op.text),
-      correta: novaCorreta,
-    };
-  });
+  const novaCorreta = embaralhadas.findIndex(
+    (op) => op.originalIndex === p.correta,
+  );
+
+  return {
+    ...p,
+    opcoes: embaralhadas.map((op) => op.text),
+    correta: novaCorreta,
+  };
 }
 
 export default function Jogo({ finalizar }) {
@@ -32,10 +31,16 @@ export default function Jogo({ finalizar }) {
   const [respostaSelecionada, setRespostaSelecionada] = useState(null);
   const [respondido, setRespondido] = useState(false);
 
-  const TEMPO_MAX = 10;
+  const TEMPO_MAX = 20;
   const [tempo, setTempo] = useState(TEMPO_MAX);
 
   const somAcerto = useRef(null);
+
+  useEffect(() => {
+    const perguntasAleatorias = embaralhar(perguntas).map(embaralharPergunta);
+
+    setPerguntasJogo(perguntasAleatorias);
+  }, []);
 
   useEffect(() => {
     const audio = new Audio("/sound-effect1.mp3");
@@ -43,11 +48,7 @@ export default function Jogo({ finalizar }) {
   }, []);
 
   useEffect(() => {
-    setPerguntasJogo(embaralharPerguntas(perguntas));
-  }, []);
-
-  useEffect(() => {
-    if (mostrarResposta || respondido) return;
+    if (mostrarResposta) return;
 
     if (tempo <= 0) {
       setMostrarResposta(true);
@@ -58,14 +59,19 @@ export default function Jogo({ finalizar }) {
 
     const timer = setTimeout(() => setTempo((t) => t - 1), 1000);
     return () => clearTimeout(timer);
-  }, [tempo, mostrarResposta, respondido]);
+  }, [tempo, mostrarResposta]);
+
+  useEffect(() => {
+    setTempo(TEMPO_MAX);
+  }, [indice]);
 
   function responder(i) {
     if (respondido) return;
 
     setRespondido(true);
 
-    const correta = perguntas[indice].correta;
+    const perguntaAtual = perguntasJogo[indice];
+    const correta = perguntaAtual.correta;
 
     setRespostaSelecionada(i);
     setMostrarResposta(true);
@@ -79,17 +85,16 @@ export default function Jogo({ finalizar }) {
   function proximaPergunta() {
     setMostrarResposta(false);
     setRespostaSelecionada(null);
-    setTempo(TEMPO_MAX);
     setRespondido(false);
 
-    if (indice + 1 < perguntas.length) {
+    if (indice + 1 < perguntasJogo.length) {
       setIndice(indice + 1);
     } else {
       finalizar(pontuacao);
     }
   }
 
-  const pergunta = perguntas[indice];
+  const pergunta = perguntasJogo[indice];
 
   if (!pergunta) return null;
 
@@ -109,14 +114,14 @@ export default function Jogo({ finalizar }) {
       </div>
 
       <motion.div
-        className="w-full max-w-sm px-4 relative"
+        className="w-full max-w-xs px-3 relative"
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.4 }}
       >
         <div className="absolute top-0 left-0 w-full flex items-center justify-between px-6 py-4 z-10">
           <p className="text-cyan-400 text-xs font-bold">
-            {indice + 1}/{perguntas.length}
+            {indice + 1}/{perguntasJogo.length}
           </p>
 
           <p className="text-gray-300 text-xs">
@@ -125,13 +130,13 @@ export default function Jogo({ finalizar }) {
           </p>
         </div>
 
-        <div className="bg-white/10 backdrop-blur-2xl border border-white/20 shadow-[0_0_40px_rgba(0,255,255,0.1)] p-6 pb-16 rounded-3xl flex flex-col gap-4 mt-12">
+        <div className="bg-white/10 backdrop-blur-2xl border border-white/20 shadow-[0_0_40px_rgba(0,255,255,0.1)] p-4 pb-10 rounded-3xl flex flex-col gap-4 mt-12">
           <motion.h2
             key={indice}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
-            className="text-lg font-semibold text-white leading-relaxed"
+            className="text-base font-semibold text-white leading-relaxed"
           >
             {pergunta.pergunta}
           </motion.h2>
@@ -159,7 +164,7 @@ export default function Jogo({ finalizar }) {
                   whileHover={{ scale: !mostrarResposta ? 1.03 : 1 }}
                   whileTap={{ scale: 0.96 }}
                   onClick={() => !mostrarResposta && responder(i)}
-                  className={`p-3 text-sm rounded-xl text-white border transition-all ${estilo}`}
+                  className={`p-2 text-sm rounded-xl text-white border transition-all ${estilo}`}
                 >
                   {op}
                 </motion.button>
@@ -193,23 +198,23 @@ export default function Jogo({ finalizar }) {
             </div>
           )}
         </div>
-      </motion.div>
 
-      {mostrarResposta && (
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-sm px-4 z-50"
-        >
-          <motion.button
-            whileTap={{ scale: 0.96 }}
-            onClick={proximaPergunta}
-            className="w-full py-3 rounded-2xl font-semibold text-white bg-gradient-to-r from-green-500 to-emerald-400 shadow-xl shadow-green-500/30"
+        {mostrarResposta && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mt-5 w-full max-w-xs px-3 "
           >
-            {indice + 1 === perguntas.length ? "Finalizar" : "Próxima →"}
-          </motion.button>
-        </motion.div>
-      )}
+            <motion.button
+              whileTap={{ scale: 0.96 }}
+              onClick={proximaPergunta}
+              className="w-full py-3 rounded-2xl font-semibold text-white bg-gradient-to-r from-green-500 to-emerald-400 shadow-xl shadow-green-500/30"
+            >
+              {indice + 1 === perguntasJogo.length ? "Finalizar" : "Próxima →"}
+            </motion.button>
+          </motion.div>
+        )}
+      </motion.div>
     </div>
   );
 }

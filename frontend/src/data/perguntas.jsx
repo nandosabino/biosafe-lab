@@ -1,88 +1,127 @@
 export const perguntas = [
   {
+    pergunta: "Qual EPI é essencial em um laboratório?",
+    opcoes: ["Chinelo", "Jaleco", "Boné"],
+    correta: 1,
+    dificuldade: "easy",
+    explicacao: "O jaleco protege contra substâncias químicas e biológicas.",
+  },
+  {
+    pergunta: "É permitido comer no laboratório?",
+    opcoes: ["Sim", "Não", "Só às vezes"],
+    correta: 1,
+    dificuldade: "easy",
+    explicacao:
+      "Comer pode causar contaminação e ingestão de substâncias perigosas.",
+  },
+  {
+    pergunta: "Para que servem as luvas?",
+    opcoes: ["Estilo", "Proteção", "Decoração"],
+    correta: 1,
+    dificuldade: "easy",
+    explicacao: "Protegem contra contato com agentes contaminantes.",
+  },
+  {
+    pergunta: "O que fazer antes de iniciar um experimento?",
+    opcoes: ["Começar direto", "Ler o procedimento", "Improvisar"],
+    correta: 1,
+    dificuldade: "easy",
+    explicacao: "Ler evita erros e acidentes.",
+  },
+  {
+    pergunta: "É obrigatório prender o cabelo no laboratório?",
+    opcoes: ["Sim", "Não", "Só se quiser"],
+    correta: 0,
+    dificuldade: "easy",
+    explicacao: "Evita contaminação e acidentes.",
+  },
+
+  {
     pergunta:
-      "Durante um experimento, você derrama uma amostra biológica na bancada. O que fazer?",
+      "Você esqueceu de lavar as mãos após o experimento. Qual o risco?",
+    opcoes: ["Nenhum", "Contaminação", "Só sujeira"],
+    correta: 1,
+    dificuldade: "medium",
+    explicacao: "Microrganismos podem ser transferidos.",
+  },
+  {
+    pergunta: "O que fazer com materiais contaminados?",
+    opcoes: ["Lixo comum", "Descartar corretamente", "Guardar"],
+    correta: 1,
+    dificuldade: "medium",
+    explicacao: "Devem seguir normas específicas de descarte.",
+  },
+  {
+    pergunta: "Você derrubou um reagente no chão. O que fazer?",
     opcoes: [
-      "Limpar rapidamente com papel seco",
-      "Cobrir com outro material e continuar o experimento",
-      "Aplicar desinfetante adequado e seguir o protocolo de biossegurança",
+      "Ignorar",
+      "Limpar de qualquer forma",
+      "Seguir o procedimento correto de limpeza",
     ],
     correta: 2,
-    explicacao:
-      "Derramamentos devem ser tratados com desinfetantes apropriados para evitar contaminação.",
+    dificuldade: "medium",
+    explicacao: "Evita riscos químicos e biológicos.",
   },
   {
-    pergunta: "Como descartar material biológico?",
+    pergunta: "Você está com luvas e precisa usar o celular. O que fazer?",
     opcoes: [
-      "Descartar junto com resíduos comuns, se estiver embalado",
-      "Utilizar recipiente específico para resíduos biológicos",
-      "Descartar na pia com água corrente",
+      "Usar normalmente",
+      "Tirar as luvas antes",
+      "Limpar na roupa e usar",
     ],
     correta: 1,
-    explicacao:
-      "Resíduos biológicos devem ser descartados corretamente para evitar riscos.",
+    dificuldade: "medium",
+    explicacao: "Evita contaminação cruzada.",
   },
   {
-    pergunta: "Você viu um colega sem luvas manipulando amostras. O que fazer?",
-    opcoes: [
-      "Continuar seu trabalho normalmente",
-      "Avisar o colega sobre o risco de contaminação",
-      "Aguardar o professor perceber",
-    ],
-    correta: 1,
-    explicacao:
-      "Alertar colegas ajuda a manter a segurança coletiva no laboratório.",
-  },
-  {
-    pergunta:
-      "Você esqueceu de prender o cabelo antes de entrar no laboratório. O que fazer?",
-    opcoes: [
-      "Entrar rapidamente e evitar contato com materiais",
-      "Prender o cabelo antes de iniciar as atividades",
-      "Cobrir parcialmente com o jaleco",
-    ],
-    correta: 1,
-    explicacao: "Cabelos soltos aumentam o risco de contaminação e acidentes.",
-  },
-  {
-    pergunta: "Você derrubou um reagente no chão. Qual a atitude correta?",
-    opcoes: [
-      "Evitar a área e continuar o experimento",
-      "Limpar imediatamente sem equipamento específico",
-      "Sinalizar o local e realizar a limpeza conforme o protocolo",
-    ],
+    pergunta: "Você vê vidro quebrado no chão. O que fazer?",
+    opcoes: ["Ignorar", "Pegar com a mão", "Usar equipamento adequado"],
     correta: 2,
-    explicacao:
-      "Derramamentos químicos exigem procedimentos específicos de segurança.",
+    dificuldade: "medium",
+    explicacao: "Evita cortes e acidentes.",
+  },
+
+  {
+    pergunta: "O que pode acontecer ao misturar reagentes sem conhecimento?",
+    opcoes: ["Nada", "Reações perigosas", "Melhora o experimento"],
+    correta: 1,
+    dificuldade: "hard",
+    explicacao: "Pode causar explosões ou gases tóxicos.",
   },
   {
-    pergunta: "Você está usando luvas e precisa mexer no celular. O que fazer?",
+    pergunta: "O que é biossegurança?",
     opcoes: [
-      "Usar o celular com cuidado para não contaminar",
-      "Retirar as luvas antes de tocar no celular",
-      "Limpar a luva rapidamente e usar o celular",
+      "Estudo de animais",
+      "Conjunto de medidas de proteção",
+      "Tipo de célula",
     ],
     correta: 1,
-    explicacao: "Luvas contaminadas não devem tocar superfícies pessoais.",
+    dificuldade: "hard",
+    explicacao: "São práticas para evitar riscos à saúde e ao ambiente.",
   },
   {
-    pergunta: "Após terminar o experimento, o que fazer com os resíduos?",
-    opcoes: [
-      "Deixar os materiais organizados na bancada",
-      "Descartar conforme o tipo de resíduo gerado",
-      "Descartar tudo em um único recipiente",
-    ],
+    pergunta: "Qual o risco de não usar óculos de proteção?",
+    opcoes: ["Nenhum", "Lesões oculares", "Apenas desconforto"],
     correta: 1,
-    explicacao: "Cada tipo de resíduo deve seguir um descarte específico",
+    dificuldade: "hard",
+    explicacao: "Protege contra respingos e partículas perigosas.",
   },
   {
-    pergunta: "Você percebe um colega sem EPI. O que fazer?",
+    pergunta: "Qual atitude é correta ao perceber um colega sem EPI?",
+    opcoes: ["Ignorar", "Avisar o colega", "Rir"],
+    correta: 1,
+    dificuldade: "hard",
+    explicacao: "A segurança é responsabilidade de todos.",
+  },
+  {
+    pergunta: "Por que não se deve pipetar com a boca?",
     opcoes: [
-      "Continuar seu trabalho normalmente",
-      "Alertar o colega sobre a importância do EPI",
-      "Reportar diretamente sem falar com ele",
+      "Não faz diferença",
+      "Risco de ingestão de substâncias",
+      "Só é proibido em alguns casos",
     ],
     correta: 1,
-    explicacao: "A comunicação ajuda a prevenir riscos no ambiente.",
+    dificuldade: "hard",
+    explicacao: "Pode causar intoxicação grave.",
   },
 ];
