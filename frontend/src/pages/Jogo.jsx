@@ -49,7 +49,7 @@ export default function Jogo({ finalizar }) {
   }, []);
 
   useEffect(() => {
-    if (mostrarResposta || respondido || acabou) return;
+    if (mostrarResposta || respondido || saindo) return;
 
     if (tempo <= 0) {
       setMostrarResposta(true);
@@ -60,7 +60,7 @@ export default function Jogo({ finalizar }) {
 
     const timer = setTimeout(() => setTempo((t) => t - 1), 1000);
     return () => clearTimeout(timer);
-  }, [tempo, mostrarResposta, respondido, acabou]);
+  }, [tempo, mostrarResposta, respondido, saindo]);
 
   useEffect(() => {
     setTempo(TEMPO_MAX);
@@ -102,19 +102,6 @@ export default function Jogo({ finalizar }) {
 
   const pergunta = perguntasJogo[indice];
 
-  if (acabou) {
-    return (
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="h-screen flex items-center justify-center bg-black text-white"
-      >
-        <p className="text-sm text-gray-400 animate-pulse">
-          Calculando resultado...
-        </p>
-      </motion.div>
-    );
-  }
   if (!pergunta) return null;
 
   return (
