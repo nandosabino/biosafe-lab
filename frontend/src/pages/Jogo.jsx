@@ -30,7 +30,7 @@ export default function Jogo({ finalizar }) {
   const [mostrarResposta, setMostrarResposta] = useState(false);
   const [respostaSelecionada, setRespostaSelecionada] = useState(null);
   const [respondido, setRespondido] = useState(false);
-  const [acabou, setAcabou] = useState(false);
+  const [saindo, setSaindo] = useState(false);
 
   const TEMPO_MAX = 20;
   const [tempo, setTempo] = useState(TEMPO_MAX);
@@ -84,7 +84,7 @@ export default function Jogo({ finalizar }) {
   }
 
   function proximaPergunta() {
-    if (acabou) return;
+    if (saindo) return;
 
     if (indice + 1 < perguntasJogo.length) {
       setMostrarResposta(false);
@@ -92,8 +92,11 @@ export default function Jogo({ finalizar }) {
       setRespondido(false);
       setIndice((prev) => prev + 1);
     } else {
-      setAcabou(true);
-      finalizar(pontuacao);
+      setSaindo(true);
+
+      setTimeout(() => {
+        finalizar(pontuacao);
+      }, 500);
     }
   }
 
@@ -132,8 +135,8 @@ export default function Jogo({ finalizar }) {
       <motion.div
         className="w-full max-w-xs px-3 relative"
         initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.4 }}
+        animate={{ opacity: saindo ? 0 : 1, scale: saindo ? 0.95 : 1 }}
+        transition={{ duration: 0.5, ease: "easeInOut" }}
       >
         <div className="absolute top-0 left-0 w-full flex items-center justify-between px-6 py-4 z-10">
           <p className="text-cyan-400 text-xs font-bold">
