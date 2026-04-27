@@ -37,9 +37,16 @@ export default function Jogo({ finalizar }) {
 
   useEffect(() => {
     const perguntasAleatorias = embaralhar(perguntas).map(embaralharPergunta);
-
     setPerguntasJogo(perguntasAleatorias);
   }, []);
+
+  // 🧠 RESET CORRETO A CADA NOVA PERGUNTA (FIX DO BUG)
+  useEffect(() => {
+    setTempo(TEMPO_MAX);
+    setMostrarResposta(false);
+    setRespostaSelecionada(null);
+    setRespondido(false);
+  }, [indice]);
 
   useEffect(() => {
     if (mostrarResposta || respondido || saindo) return;
@@ -54,10 +61,6 @@ export default function Jogo({ finalizar }) {
     const timer = setTimeout(() => setTempo((t) => t - 1), 1000);
     return () => clearTimeout(timer);
   }, [tempo, mostrarResposta, respondido, saindo]);
-
-  useEffect(() => {
-    setTempo(TEMPO_MAX);
-  }, [indice]);
 
   function responder(i) {
     if (respondido) return;
@@ -79,8 +82,6 @@ export default function Jogo({ finalizar }) {
     if (saindo) return;
 
     if (indice + 1 < perguntasJogo.length) {
-      setRespostaSelecionada(null);
-      setRespondido(false);
       setIndice((prev) => prev + 1);
     } else {
       setSaindo(true);
@@ -89,7 +90,7 @@ export default function Jogo({ finalizar }) {
       const finalScore = pontuacao;
 
       setTimeout(() => {
-        finalizar(pontuacao);
+        finalizar(finalScore);
       }, 1000);
     }
   }
@@ -97,9 +98,7 @@ export default function Jogo({ finalizar }) {
   const pergunta = perguntasJogo[indice];
 
   const tempoEsgotado = respostaSelecionada === -1;
-
   const mostrarFeedback = mostrarResposta || tempoEsgotado;
-
   const bloqueado = mostrarFeedback || saindo;
 
   if (saindo) {
@@ -144,13 +143,6 @@ export default function Jogo({ finalizar }) {
       />
       <div className="absolute inset-0 bg-gradient-to-br from-blue-900/30 via-black/50 to-cyan-900/30" />
 
-      <div className="absolute inset-0 pointer-events-none z-0">
-        <div className="absolute top-6 left-6 w-24 h-24 border-t border-l border-cyan-400/30" />
-        <div className="absolute top-6 right-6 w-24 h-24 border-t border-r border-cyan-400/30" />
-        <div className="absolute bottom-6 left-6 w-24 h-24 border-b border-l border-cyan-400/30" />
-        <div className="absolute bottom-6 right-6 w-24 h-24 border-b border-r border-cyan-400/30" />
-      </div>
-
       <motion.div
         className="w-full max-w-xs px-3 relative"
         initial={{ opacity: 0, scale: 0.95 }}
@@ -163,7 +155,7 @@ export default function Jogo({ finalizar }) {
           </p>
 
           <p className="text-gray-300 text-xs">
-            Pontos:{""}{" "}
+            Pontos:{" "}
             <span className="text-cyan-400 font-semibold">{pontuacao}</span>
           </p>
         </div>
@@ -215,6 +207,7 @@ export default function Jogo({ finalizar }) {
               {respostaSelecionada === -1 && (
                 <p className="text-red-400 text-sm">⏰ Tempo esgotado</p>
               )}
+
               {respostaSelecionada !== -1 &&
                 respostaSelecionada !== pergunta.correta && (
                   <p className="text-red-400 text-sm">✖ Resposta incorreta</p>
@@ -241,7 +234,7 @@ export default function Jogo({ finalizar }) {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mt-5 w-full max-w-xs px-3 "
+            className="mt-5 w-full max-w-xs px-3"
           >
             <motion.button
               whileTap={{ scale: 0.96 }}
