@@ -21,84 +21,89 @@ export default function Ranking({ voltar }) {
     carregar();
   }, []);
 
+  const renderItem = (jogador, index) => {
+    const isTop1 = index === 0;
+    const isTop2 = index === 1;
+    const isTop3 = index === 2;
+
+    let estilo = "bg-white/5 border-white/10";
+    let emoji = `${index + 1}.`;
+
+    if (isTop1) {
+      estilo =
+        "bg-yellow-400/20 border-yellow-400 shadow-[0_0_25px_rgba(250,204,21,0.25)]";
+      emoji = "🥇";
+    } else if (isTop2) {
+      estilo = "bg-gray-300/20 border-gray-300";
+      emoji = "🥈";
+    } else if (isTop3) {
+      estilo = "bg-orange-400/20 border-orange-400";
+      emoji = "🥉";
+    }
+
+    return (
+      <motion.div
+        key={jogador._id}
+        initial={{ opacity: 0, y: 15 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: index * 0.05 }}
+        className={`flex justify-between items-center px-4 py-2 rounded-xl border ${estilo}`}
+      >
+        <span className="flex items-center gap-2">
+          {emoji} {jogador.nome}
+        </span>
+
+        <span className="text-cyan-400 font-semibold">{jogador.pontuacao}</span>
+      </motion.div>
+    );
+  };
+
   return (
     <div className="relative h-screen flex items-center justify-center overflow-hidden text-white">
+      {/* FUNDO */}
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: "url('/lab-bg.jpg')" }}
       />
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-900/30 via-black/50 to-cyan-900/30" />
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-900/30 via-black/60 to-cyan-900/30" />
 
+      {/* CARD CENTRAL ÚNICO */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
+        initial={{ opacity: 0, scale: 0.96 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="bg-white/10 backdrop-blur-2xl border border-white/20 shadow-[0_0_40px_rgba(0,255,255,0.1)] rounded-3xl px-6 py-8 flex flex-col gap-4 max-w-xs w-full"
+        className="relative w-full max-w-sm bg-white/10 backdrop-blur-2xl border border-white/20 rounded-3xl shadow-[0_0_50px_rgba(0,255,255,0.1)] px-6 py-8 flex flex-col gap-4"
       >
-        <h1 className="text-2xl font-bold text-center">🏆 Ranking</h1>
+        {/* TÍTULO */}
+        <div className="text-center">
+          <h1 className="text-2xl font-bold">🏆 Ranking</h1>
+          <p className="text-xs text-gray-400 mt-1">
+            Resultado dos simuladores
+          </p>
+        </div>
 
-        <div className="flex flex-col gap-2 max-h-[40vh] overflow-y-auto pr-2">
+        {/* LISTA */}
+        <div className="flex flex-col gap-2 max-h-[40vh] overflow-y-auto pr-1">
           {loading && (
-            <motion.div
-              animate={{ opacity: [0.4, 1, 0.4] }}
-              transition={{ repeat: Infinity, duration: 1.2 }}
-              className="text-gray-300 text-center text-sm"
-            >
-              ⏳ Carregando ranking...
-            </motion.div>
+            <p className="text-center text-sm text-gray-400">
+              Carregando ranking...
+            </p>
           )}
 
           {!loading && ranking.length === 0 && (
-            <p className="text-gray-400 text-center text-sm">
+            <p className="text-center text-sm text-gray-400">
               Nenhum jogador ainda
             </p>
           )}
 
-          {ranking.map((jogador, index) => {
-            const destaque =
-              index === 0
-                ? "bg-yellow-400/20 border-yellow-400"
-                : index === 1
-                  ? "bg-gray-300/20 border-gray-300"
-                  : index === 2
-                    ? "bg-orange-400/20 border-orange-400"
-                    : "bg-white/5 border-white/10";
-
-            return (
-              <motion.div
-                key={jogador._id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  delay: index * 0.06,
-                  duration: 0.5,
-                  ease: "easeOut",
-                }}
-              >
-                <div
-                  className={`flex justify-between items-center px-4 py-2 rounded-xl border ${destaque}`}
-                >
-                  <span className="flex items-center gap-2">
-                    {index === 0 && "🥇 "}
-                    {index === 1 && "🥈 "}
-                    {index === 2 && "🥉 "}
-                    {index > 2 && `${index + 1}.`}
-                    {jogador.nome}
-                  </span>
-
-                  <span className="text-cyan-400 font-semibold">
-                    {jogador.pontuacao}
-                  </span>
-                </div>
-              </motion.div>
-            );
-          })}
+          {ranking.map(renderItem)}
         </div>
 
+        {/* BOTÃO */}
         <button
           onClick={voltar}
-          className="mt-4 py-2 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-xl font-semibold"
+          className="mt-4 py-2 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-xl font-semibold hover:scale-[1.02] transition"
         >
-          Voltar
+          Voltar ao Início
         </button>
       </motion.div>
     </div>
