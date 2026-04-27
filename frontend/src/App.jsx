@@ -25,10 +25,10 @@ export default function App() {
       {tela === "inicio" && (
         <motion.div
           key="inicio"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.4 }}
+          initial={{ opacity: 0, scale: 0.98 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.98 }}
+          transition={{ duration: 0.4, ease: "easeInOut" }}
         >
           <Inicio
             iniciar={(nome) => {
@@ -43,11 +43,11 @@ export default function App() {
       {tela === "jogo" && (
         <Jogo
           usuario={usuario}
-          finalizar={async (pontos) => {
+          finalizar={(pontos) => {
             setPontuacao(pontos);
-            await salvarRankingAPI(usuario, pontos);
-
             setTela("fim");
+
+            salvarRankingAPI(usuario, pontos).catch(() => {});
           }}
         />
       )}

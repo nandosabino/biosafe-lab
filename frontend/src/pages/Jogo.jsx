@@ -98,7 +98,19 @@ export default function Jogo({ finalizar }) {
 
   const pergunta = perguntasJogo[indice];
 
-  if (!pergunta) return null;
+  if (!pergunta) {
+    return (
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="h-screen flex items-center justify-center bg-black text-white"
+      >
+        <p className="text-sm text-gray-400 animate-pulse">
+          Preparando perguntas...
+        </p>
+      </motion.div>
+    );
+  }
 
   return (
     <div className="relative h-screen flex items-center justify-center overflow-hidden">
