@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import ProgressBar from "../components/ProgressBar";
 import { perguntas } from "../data/perguntas";
 import { embaralhar } from "../utils/embaralhar";
@@ -35,17 +35,10 @@ export default function Jogo({ finalizar }) {
   const TEMPO_MAX = 20;
   const [tempo, setTempo] = useState(TEMPO_MAX);
 
-  const somAcerto = useRef(null);
-
   useEffect(() => {
     const perguntasAleatorias = embaralhar(perguntas).map(embaralharPergunta);
 
     setPerguntasJogo(perguntasAleatorias);
-  }, []);
-
-  useEffect(() => {
-    const audio = new Audio("/sound-effect1.mp3");
-    somAcerto.current = audio;
   }, []);
 
   useEffect(() => {
@@ -79,7 +72,6 @@ export default function Jogo({ finalizar }) {
 
     if (i === correta) {
       setPontuacao((p) => p + 10);
-      somAcerto.current?.play().catch(() => {});
     }
   }
 
@@ -87,16 +79,48 @@ export default function Jogo({ finalizar }) {
     if (saindo) return;
 
     if (indice + 1 < perguntasJogo.length) {
-      setMostrarResposta(false);
       setRespostaSelecionada(null);
       setRespondido(false);
       setIndice((prev) => prev + 1);
     } else {
-      finalizar(pontuacao);
+      setSaindo(true);
+      setMostrarResposta(false);
+
+      const finalScore = pontuacao;
+
+      setTimeout(() => {
+        finalizar(pontuacao);
+      }, 1000);
     }
   }
 
   const pergunta = perguntasJogo[indice];
+
+  const tempoEsgotado = respostaSelecionada === -1;
+
+  const mostrarFeedback = mostrarResposta || tempoEsgotado;
+
+  const bloqueado = mostrarFeedback || saindo;
+
+  if (saindo) {
+    return (
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="h-screen flex items-center justify-center bg-black text-white"
+      >
+        <div className="flex flex-col items-center gap-4 text-center">
+          <div className="w-14 h-14 border-4 border-white/20 border-t-cyan-400 rounded-full animate-spin" />
+
+          <p className="text-sm text-gray-300 animate-pulse">
+            Analisando respostas no laboratório...
+          </p>
+
+          <p className="text-xs text-gray-500">Gerando ranking final</p>
+        </div>
+      </motion.div>
+    );
+  }
 
   if (!pergunta) {
     return (
@@ -162,7 +186,7 @@ export default function Jogo({ finalizar }) {
               let estilo =
                 "bg-white/5 border-white/10 hover:bg-white/10 hover:border-cyan-400/50";
 
-              if (mostrarResposta) {
+              if (mostrarFeedback) {
                 if (i === pergunta.correta) {
                   estilo =
                     "bg-green-500/20 border-green-400 shadow-lg shadow-green-400/30";
@@ -175,9 +199,9 @@ export default function Jogo({ finalizar }) {
               return (
                 <motion.button
                   key={i}
-                  whileHover={{ scale: !mostrarResposta ? 1.03 : 1 }}
+                  whileHover={{ scale: !bloqueado ? 1.03 : 1 }}
                   whileTap={{ scale: 0.96 }}
-                  onClick={() => !mostrarResposta && responder(i)}
+                  onClick={() => !bloqueado && responder(i)}
                   className={`p-2 text-sm rounded-xl text-white border transition-all ${estilo}`}
                 >
                   {op}
@@ -186,7 +210,7 @@ export default function Jogo({ finalizar }) {
             })}
           </div>
 
-          {mostrarResposta && (
+          {mostrarFeedback && (
             <div className="flex flex-col gap-1 mt-3">
               {respostaSelecionada === -1 && (
                 <p className="text-red-400 text-sm">⏰ Tempo esgotado</p>
@@ -213,7 +237,7 @@ export default function Jogo({ finalizar }) {
           )}
         </div>
 
-        {mostrarResposta && (
+        {mostrarFeedback && !saindo && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
