@@ -1,3 +1,4 @@
+import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import Fim from "./pages/Fim";
 import Inicio from "./pages/Inicio";
@@ -20,15 +21,23 @@ export default function App() {
   }
 
   return (
-    <>
+    <AnimatePresence mode="wait">
       {tela === "inicio" && (
-        <Inicio
-          iniciar={(nome) => {
-            setUsuario(nome);
-            setTela("jogo");
-          }}
-          verRanking={() => setTela("ranking")}
-        />
+        <motion.div
+          key="inicio"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.4 }}
+        >
+          <Inicio
+            iniciar={(nome) => {
+              setUsuario(nome);
+              setTela("jogo");
+            }}
+            verRanking={() => setTela("ranking")}
+          />
+        </motion.div>
       )}
 
       {tela === "jogo" && (
@@ -36,7 +45,6 @@ export default function App() {
           usuario={usuario}
           finalizar={async (pontos) => {
             setPontuacao(pontos);
-
             await salvarRankingAPI(usuario, pontos);
 
             setTela("fim");
@@ -56,6 +64,6 @@ export default function App() {
       )}
 
       {tela === "ranking" && <Ranking voltar={() => setTela("inicio")} />}
-    </>
+    </AnimatePresence>
   );
 }

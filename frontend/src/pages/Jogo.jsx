@@ -92,11 +92,7 @@ export default function Jogo({ finalizar }) {
       setRespondido(false);
       setIndice((prev) => prev + 1);
     } else {
-      setSaindo(true);
-
-      setTimeout(() => {
-        finalizar(pontuacao);
-      }, 500);
+      finalizar(pontuacao);
     }
   }
 
