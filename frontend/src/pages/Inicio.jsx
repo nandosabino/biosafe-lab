@@ -7,7 +7,7 @@ export default function Inicio({ iniciar, verRanking }) {
 
   const [nome, setNome] = useState("");
 
-  const entrar = () => {
+  const entrar = async () => {
     const nomeLimpo = nome.trim();
 
     if (!nomeLimpo) {
@@ -15,14 +15,15 @@ export default function Inicio({ iniciar, verRanking }) {
       return;
     }
 
-    if (nomeExiste(nomeLimpo)) {
+    const existe = await nomeExiste(nomeLimpo);
+
+    if (existe) {
       setErro("Esse nome já foi usado!");
       return;
     }
 
     setErro("");
 
-    salvarJogador(nomeLimpo);
     localStorage.setItem("usuario", nomeLimpo);
 
     iniciar(nomeLimpo);

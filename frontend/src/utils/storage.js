@@ -1,14 +1,6 @@
-export const getJogadores = () => {
-	return JSON.parse(localStorage.getItem("jogadores")) || [];
-};
+import { getRanking } from "../services/api";
 
-export const nomeExiste = (nome) => {
-	const jogadores = getJogadores();
-	return jogadores.some((j) => j.toLowerCase() === nome.toLowerCase());
-};
-
-export const salvarJogador = (nome) => {
-	const jogadores = getJogadores();
-	jogadores.push(nome);
-	localStorage.setItem("jogadores", JSON.stringify(jogadores));
+export const nomeExiste = async (nome) => {
+	const jogadores = await getRanking();
+	return jogadores.some((j) => j.nome.toLowerCase() === nome.toLowerCase());
 };
