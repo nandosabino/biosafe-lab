@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { nomeExiste, salvarJogador } from "../utils/storage";
+import { nomeExiste } from "../utils/storage";
 
 export default function Inicio({ iniciar, verRanking }) {
   const [erro, setErro] = useState("");
