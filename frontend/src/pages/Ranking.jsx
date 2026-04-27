@@ -60,20 +60,17 @@ export default function Ranking({ voltar }) {
 
   return (
     <div className="relative h-screen flex items-center justify-center overflow-hidden text-white">
-      {/* FUNDO */}
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: "url('/lab-bg.jpg')" }}
       />
       <div className="absolute inset-0 bg-gradient-to-br from-blue-900/30 via-black/60 to-cyan-900/30" />
 
-      {/* CARD CENTRAL ÚNICO */}
       <motion.div
         initial={{ opacity: 0, scale: 0.96 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="relative w-full max-w-sm bg-white/10 backdrop-blur-2xl border border-white/20 rounded-3xl shadow-[0_0_50px_rgba(0,255,255,0.1)] px-6 py-8 flex flex-col gap-4"
+        className="relative w-full max-w-sm h-[85vh] bg-white/10 backdrop-blur-2xl border border-white/20 rounded-3xl shadow-[0_0_50px_rgba(0,255,255,0.1)] px-6 py-6 flex flex-col"
       >
-        {/* TÍTULO */}
         <div className="text-center">
           <h1 className="text-2xl font-bold">🏆 Ranking</h1>
           <p className="text-xs text-gray-400 mt-1">
@@ -81,8 +78,7 @@ export default function Ranking({ voltar }) {
           </p>
         </div>
 
-        {/* LISTA */}
-        <div className="flex flex-col gap-2 max-h-[40vh] overflow-y-auto pr-1">
+        <div className="flex-1 overflow-y-auto flex flex-col gap-2 pr-1 min-h-0">
           {loading && (
             <p className="text-center text-sm text-gray-400">
               Carregando ranking...
@@ -98,7 +94,6 @@ export default function Ranking({ voltar }) {
           {ranking.map(renderItem)}
         </div>
 
-        {/* BOTÃO */}
         <button
           onClick={voltar}
           className="mt-4 py-2 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-xl font-semibold hover:scale-[1.02] transition"
