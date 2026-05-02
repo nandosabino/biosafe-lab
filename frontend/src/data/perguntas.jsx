@@ -1,328 +1,145 @@
 export const perguntas = [
   {
-    nivel: "facil",
-    pergunta:
-      "Qual é o principal objetivo da biossegurança em ambientes laboratoriais?",
+    pergunta: "De acordo com os princípios de biossegurança, qual é o principal objetivo das ações aplicadas em laboratórios?",
     opcoes: [
-      "Prevenir riscos à saúde humana e ao meio ambiente",
-      "Aumentar a velocidade dos experimentos",
+      "Aumentar a produtividade dos experimentos",
+      "Prevenir, minimizar ou eliminar riscos às pessoas e ao meio ambiente",
       "Reduzir custos operacionais",
-      "Substituir normas institucionais",
+      "Acelerar resultados laboratoriais"
     ],
-    correta: 0,
-  },
-  {
-    nivel: "facil",
-    pergunta: "O que significa EPI?",
-    opcoes: [
-      "Equipamento de Proteção Individual",
-      "Elemento de Prevenção Industrial",
-      "Equipamento de Processamento Interno",
-      "Estrutura de Proteção Institucional",
-    ],
-    correta: 0,
-  },
-  {
-    nivel: "facil",
-    pergunta: "Qual item é considerado um EPI?",
-    opcoes: ["Luvas", "Computador", "Caneta", "Livro"],
-    correta: 0,
-  },
-  {
-    nivel: "facil",
-    pergunta:
-      "Qual prática é essencial antes de iniciar atividades laboratoriais?",
-    opcoes: [
-      "Higienização das mãos",
-      "Uso de celular",
-      "Retirar jaleco",
-      "Comer alimentos",
-    ],
-    correta: 0,
-  },
-  {
-    nivel: "facil",
-    pergunta: "O jaleco deve ser utilizado:",
-    opcoes: [
-      "Apenas dentro do laboratório",
-      "Em qualquer ambiente",
-      "Somente em casa",
-      "Apenas em reuniões",
-    ],
-    correta: 0,
-  },
-  {
-    nivel: "facil",
-    pergunta: "Qual é um exemplo de risco biológico?",
-    opcoes: ["Vírus", "Mesa", "Computador", "Ar condicionado"],
-    correta: 0,
-  },
-  {
-    nivel: "facil",
-    pergunta: "EPIs servem principalmente para:",
-    opcoes: [
-      "Proteger o trabalhador",
-      "Aumentar produtividade",
-      "Substituir equipamentos",
-      "Evitar normas",
-    ],
-    correta: 0,
-  },
-  {
-    nivel: "facil",
-    pergunta: "Qual ação reduz risco de contaminação?",
-    opcoes: [
-      "Higienizar mãos",
-      "Reutilizar luvas",
-      "Evitar jaleco",
-      "Comer no laboratório",
-    ],
-    correta: 0,
-  },
-  {
-    nivel: "facil",
-    pergunta: "Máscara em laboratório serve para:",
-    opcoes: [
-      "Proteção contra agentes biológicos",
-      "Estética",
-      "Substituir luvas",
-      "Reduzir calor",
-    ],
-    correta: 0,
-  },
-  {
-    nivel: "facil",
-    pergunta: "Biossegurança busca:",
-    opcoes: [
-      "Prevenir acidentes",
-      "Aumentar custos",
-      "Eliminar equipamentos",
-      "Substituir normas",
-    ],
-    correta: 0,
+    correta: 1,
+    explicacao: "A biossegurança é definida como o conjunto de ações voltadas à prevenção, minimização ou eliminação de riscos, visando à saúde humana, animal, ao meio ambiente e à qualidade dos resultados."
   },
 
   {
-    nivel: "medio",
-    pergunta:
-      "Durante manipulação de amostra biológica ocorre derramamento. Qual conduta correta?",
+    pergunta: "A simples presença de um agente biológico em laboratório significa necessariamente risco de infecção?",
     opcoes: [
-      "Isolar área e descontaminar imediatamente",
-      "Continuar o trabalho",
-      "Secar com papel comum",
-      "Ignorar se pequeno",
+      "Sim, sempre causa infecção",
+      "Não, pois o risco depende da probabilidade de exposição e das condições envolvidas",
+      "Sim, apenas em laboratórios NB-3",
+      "Depende apenas da quantidade do agente"
     ],
-    correta: 0,
-  },
-  {
-    nivel: "medio",
-    pergunta: "Qual é a função do jaleco?",
-    opcoes: [
-      "Criar barreira de proteção",
-      "Aumentar conforto",
-      "Substituir luvas",
-      "Decoração",
-    ],
-    correta: 0,
-  },
-  {
-    nivel: "medio",
-    pergunta: "Qual atitude é incorreta em laboratório?",
-    opcoes: [
-      "Comer durante experimento",
-      "Usar luvas",
-      "Higienizar mãos",
-      "Usar jaleco",
-    ],
-    correta: 0,
-  },
-  {
-    nivel: "medio",
-    pergunta: "Qual é a função das luvas?",
-    opcoes: [
-      "Reduzir contato com agentes biológicos",
-      "Substituir lavagem das mãos",
-      "Aumentar precisão",
-      "Decorar",
-    ],
-    correta: 0,
-  },
-  {
-    nivel: "medio",
-    pergunta: "Materiais contaminados devem ser:",
-    opcoes: [
-      "Descartados corretamente",
-      "Jogados no lixo comum",
-      "Reutilizados",
-      "Lavados na pia",
-    ],
-    correta: 0,
-  },
-  {
-    nivel: "medio",
-    pergunta: "Antes de sair do laboratório deve-se:",
-    opcoes: [
-      "Remover EPIs corretamente",
-      "Levar materiais",
-      "Reutilizar luvas",
-      "Ignorar regras",
-    ],
-    correta: 0,
-  },
-  {
-    nivel: "medio",
-    pergunta: "Qual é um risco de falha em EPI?",
-    opcoes: [
-      "Exposição a agentes biológicos",
-      "Aumento de produtividade",
-      "Melhora de desempenho",
-      "Redução de custos",
-    ],
-    correta: 0,
-  },
-  {
-    nivel: "medio",
-    pergunta: "O que deve ser feito após contato com material biológico?",
-    opcoes: [
-      "Higienizar imediatamente as mãos",
-      "Continuar trabalho",
-      "Ignorar",
-      "Secar com pano",
-    ],
-    correta: 0,
-  },
-  {
-    nivel: "medio",
-    pergunta: "Qual prática aumenta risco de contaminação?",
-    opcoes: [
-      "Uso de celular no laboratório",
-      "Uso de jaleco",
-      "Uso de luvas",
-      "Higienização",
-    ],
-    correta: 0,
-  },
-  {
-    nivel: "medio",
-    pergunta: "Biossegurança é importante porque:",
-    opcoes: [
-      "Protege pessoas e ambiente",
-      "Aumenta velocidade",
-      "Reduz custos",
-      "Substitui normas",
-    ],
-    correta: 0,
+    correta: 1,
+    explicacao: "O risco é definido como a probabilidade de ocorrência de dano. A presença do agente não garante infecção, sendo necessário considerar exposição, virulência e condições do ambiente."
   },
 
   {
-    nivel: "dificil",
-    pergunta:
-      "Em laboratório NB-2, ocorre falha no EPI durante manipulação de material infeccioso. Qual conduta correta?",
+    pergunta: "Qual alternativa apresenta corretamente os tipos de riscos presentes em laboratórios de microbiologia?",
     opcoes: [
-      "Interromper, trocar EPI e higienizar mãos",
-      "Continuar e trocar depois",
-      "Avisar depois",
-      "Lavar EPI com álcool",
+      "Somente biológicos",
+      "Biológicos, químicos e físicos apenas",
+      "Biológicos, químicos, físicos, ergonômicos e de acidentes",
+      "Apenas químicos e físicos"
     ],
-    correta: 0,
+    correta: 2,
+    explicacao: "Os riscos laboratoriais são classificados em: biológicos, químicos, físicos, ergonômicos e de acidentes, todos podendo impactar a segurança dos indivíduos."
   },
+
   {
-    nivel: "dificil",
-    pergunta: "Em NB-3, qual medida reduz risco de aerossóis?",
+    pergunta: "Qual das situações abaixo caracteriza um risco ergonômico em laboratório?",
     opcoes: [
-      "Cabine de segurança biológica",
-      "Bancada aberta",
-      "Ventilador comum",
-      "Ambiente aberto",
+      "Exposição a vírus",
+      "Contato com substâncias químicas",
+      "Postura inadequada durante pipetagem repetitiva",
+      "Presença de radiação"
     ],
-    correta: 0,
+    correta: 2,
+    explicacao: "Riscos ergonômicos estão relacionados às condições de trabalho que afetam o corpo, como posturas inadequadas e movimentos repetitivos, podendo causar lesões."
   },
+
   {
-    nivel: "dificil",
-    pergunta: "Qual é o principal risco em NB-3?",
+    pergunta: "Qual é a principal função dos Equipamentos de Proteção Coletiva (EPCs)?",
     opcoes: [
-      "Exposição a patógenos perigosos",
-      "Aumento de produtividade",
-      "Redução de custos",
-      "Melhoria estética",
+      "Proteger apenas o usuário direto",
+      "Proteger todos os indivíduos no ambiente",
+      "Substituir os EPIs",
+      "Aumentar a produtividade"
     ],
-    correta: 0,
+    correta: 1,
+    explicacao: "Os EPCs são dispositivos que protegem coletivamente todos os indivíduos expostos aos riscos no ambiente de trabalho."
   },
+
   {
-    nivel: "dificil",
-    pergunta: "Em caso de derramamento em NB-2 deve-se:",
+    pergunta: "Em relação aos níveis de biossegurança, o NB-2 é caracterizado principalmente por:",
     opcoes: [
-      "Isolar área e descontaminar",
-      "Ignorar",
-      "Secar e continuar",
-      "Avisar depois",
+      "Acesso totalmente livre ao laboratório",
+      "Manipulação de agentes de alto risco sem controle",
+      "Acesso restrito e manipulação de agentes de risco moderado",
+      "Uso exclusivo de bancadas abertas sem EPI"
     ],
-    correta: 0,
+    correta: 2,
+    explicacao: "O NB-2 envolve agentes de risco moderado e exige acesso restrito, além da adoção de medidas de biossegurança específicas."
   },
+
   {
-    nivel: "dificil",
-    pergunta: "Função da cabine de segurança biológica:",
+    pergunta: "Qual critério NÃO é utilizado na classificação de risco de agentes biológicos?",
     opcoes: [
-      "Reduzir exposição a aerossóis",
-      "Aumentar velocidade",
-      "Substituir EPIs",
-      "Decoração",
+      "Virulência",
+      "Modo de transmissão",
+      "Cor do microrganismo",
+      "Dose infectante"
     ],
-    correta: 0,
+    correta: 2,
+    explicacao: "A classificação de risco considera fatores como virulência, transmissão e dose infectante, mas não características irrelevantes como cor."
   },
+
   {
-    nivel: "dificil",
-    pergunta: "Em NB-2, materiais contaminados devem ser:",
+    pergunta: "Segundo as boas práticas laboratoriais, qual comportamento é considerado inadequado?",
     opcoes: [
-      "Autoclavados antes do descarte",
-      "Jogados no lixo comum",
-      "Lavados com água",
-      "Reutilizados",
+      "Lavar as mãos após procedimentos",
+      "Utilizar EPIs adequados",
+      "Consumir alimentos no laboratório",
+      "Descontaminar superfícies"
     ],
-    correta: 0,
+    correta: 2,
+    explicacao: "A ingestão de alimentos em laboratório é proibida, pois aumenta o risco de contaminação por agentes biológicos ou químicos."
   },
+
   {
-    nivel: "dificil",
-    pergunta: "Qual falha é mais crítica?",
+    pergunta: "Por que a pipetagem com a boca é proibida em laboratórios?",
     opcoes: [
-      "Uso incorreto de EPI",
-      "Esquecer caneta",
-      "Organização da bancada",
-      "Trocar horário",
+      "Porque reduz a precisão",
+      "Porque pode causar ingestão de agentes contaminantes",
+      "Porque é desconfortável",
+      "Porque demora mais"
     ],
-    correta: 0,
+    correta: 1,
+    explicacao: "A pipetagem com a boca pode levar à ingestão acidental de agentes infecciosos, representando risco direto à saúde."
   },
+
   {
-    nivel: "dificil",
-    pergunta: "Risco de aerossóis é perigoso porque:",
+    pergunta: "Qual das alternativas descreve corretamente um agente de classe de risco 4?",
     opcoes: [
-      "Pode causar inalação de patógenos",
-      "Aumenta produtividade",
-      "Reduz custos",
-      "Melhora desempenho",
+      "Baixo risco individual e coletivo",
+      "Risco moderado com tratamento disponível",
+      "Alto risco com possibilidade de tratamento",
+      "Alto risco com alta transmissibilidade e sem tratamento eficaz"
     ],
-    correta: 0,
+    correta: 3,
+    explicacao: "Agentes de risco 4 apresentam alto risco individual e coletivo, alta transmissibilidade e geralmente não possuem tratamento eficaz."
   },
+
   {
-    nivel: "dificil",
-    pergunta: "Qual prática reduz risco em cultura microbiana?",
+    pergunta: "Qual é a função da cabine de segurança biológica (CSB)?",
     opcoes: [
-      "Técnica asséptica",
-      "Uso de celular",
-      "Ambiente aberto",
-      "Sem luvas",
+      "Aumentar a velocidade dos experimentos",
+      "Reduzir custos laboratoriais",
+      "Conter aerossóis e proteger operador, ambiente e material",
+      "Substituir o uso de EPIs"
     ],
-    correta: 0,
+    correta: 2,
+    explicacao: "As CSBs funcionam como barreiras primárias, protegendo contra aerossóis e evitando contaminação do operador e do ambiente."
   },
+
   {
-    nivel: "dificil",
-    pergunta: "Em NB-3, a regra principal é:",
+    pergunta: "Qual prática está alinhada ao princípio da precaução em biossegurança?",
     opcoes: [
-      "Contenção rigorosa de agentes biológicos",
-      "Trabalho rápido",
-      "Redução de custos",
-      "Evitar EPIs",
+      "Ignorar riscos até que ocorram acidentes",
+      "Adotar medidas preventivas mesmo sem certeza de risco",
+      "Reduzir o uso de EPIs",
+      "Trabalhar sozinho para maior produtividade"
     ],
-    correta: 0,
-  },
+    correta: 1,
+    explicacao: "O princípio da precaução orienta a adoção de medidas preventivas mesmo diante de incertezas, visando evitar danos."
+  }
 ];

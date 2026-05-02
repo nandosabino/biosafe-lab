@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ProgressBar from "../components/ProgressBar";
 import { perguntas } from "../data/perguntas";
 import { embaralhar } from "../utils/embaralhar";
@@ -62,6 +62,27 @@ export default function Jogo({ finalizar }) {
     return () => clearTimeout(timer);
   }, [tempo, mostrarResposta, respondido, saindo]);
 
+  const autoAvancoRef = useRef(null);
+
+  useEffect(() => {
+    if (!mostrarFeedback || saindo) return;
+
+    const perguntaAtual = perguntasJogo[indice];
+
+    const delay =
+      respostaSelecionada === -1
+        ? 3500
+        : respostaSelecionada === perguntaAtual?.correta
+          ? 2500
+          : 4000;
+
+    autoAvancoRef.current = setTimeout(() => {
+      proximaPergunta();
+    }, delay);
+
+    return () => clearTimeout(autoAvancoRef.current);
+  }, [mostrarFeedback, saindo, respostaSelecionada, indice, perguntasJogo]);
+
   function responder(i) {
     if (respondido) return;
 
@@ -71,7 +92,10 @@ export default function Jogo({ finalizar }) {
     const correta = perguntaAtual.correta;
 
     setRespostaSelecionada(i);
-    setMostrarResposta(true);
+
+    setTimeout(() => {
+      setMostrarResposta(true);
+    }, 300);
 
     if (i === correta) {
       setPontuacao((p) => p + 10);
@@ -80,6 +104,10 @@ export default function Jogo({ finalizar }) {
 
   function proximaPergunta() {
     if (saindo) return;
+
+    if (autoAvancoRef.current) {
+      clearTimeout(autoAvancoRef.current);
+    }
 
     if (indice + 1 < perguntasJogo.length) {
       setIndice((prev) => prev + 1);
@@ -203,30 +231,47 @@ export default function Jogo({ finalizar }) {
           </div>
 
           {mostrarFeedback && (
-            <div className="flex flex-col gap-1 mt-3">
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="flex flex-col gap-2 mt-3 p-3 rounded-xl bg-black/30 border border-white/10"
+            >
               {respostaSelecionada === -1 && (
-                <p className="text-red-400 text-sm">⏰ Tempo esgotado</p>
+                <p className="text-yellow-400 text-sm font-medium">
+                  ⏰ Tempo esgotado
+                </p>
               )}
 
               {respostaSelecionada !== -1 &&
                 respostaSelecionada !== pergunta.correta && (
-                  <p className="text-red-400 text-sm">✖ Resposta incorreta</p>
+                  <p className="text-red-400 text-sm font-medium">
+                    ✖ Você errou
+                  </p>
                 )}
 
               {respostaSelecionada === pergunta.correta && (
                 <p className="text-green-300 text-sm font-medium">
-                  ✔ Resposta correta
+                  ✔ Boa! Resposta correta
                 </p>
               )}
 
-              <p className="text-green-300 text-sm">
-                ✔ {pergunta.opcoes[pergunta.correta]}
+              <p className="text-xs text-gray-300">
+                <span className="text-cyan-400 font-semibold">
+                  Resposta correta:
+                </span>{" "}
+                {pergunta.opcoes[pergunta.correta]}
               </p>
 
-              <p className="text-xs text-gray-400 line-clamp-2">
+              <p className="text-xs text-gray-400 leading-relaxed">
                 {pergunta.explicacao}
               </p>
-            </div>
+
+              {respostaSelecionada === -1 && (
+                <p className="text-yellow-400 text-xs">
+                  ⚠ Nenhuma resposta foi selecionada a tempo.
+                </p>
+              )}
+            </motion.div>
           )}
         </div>
 
