@@ -8,22 +8,33 @@ export default function Fim({ pontuacao, reiniciar }) {
   const ranking = getRankingVisual(pontuacao, perguntas.length);
 
   const [rankingLista, setRankingLista] = useState([]);
+  const [carregando, setCarregando] = useState(true);
 
   useEffect(() => {
     async function carregarRanking() {
-      const data = await getRanking();
-      setRankingLista(data);
+      try {
+        const data = await getRanking();
+        setRankingLista(data);
+        setCarregando(false);
+      } catch (error) {
+        console.error("Erro ao carregar ranking:", error);
+        setRankingLista([]);
+        setCarregando(false);
+      }
     }
 
     carregarRanking();
+
+    const timeout = setTimeout(carregarRanking, 1500);
+
+    return () => clearTimeout(timeout);
   }, []);
 
   const usuarioAtual = localStorage.getItem("usuario");
 
   const posicao = rankingLista.findIndex((j) => j.nome === usuarioAtual) + 1;
 
-  const pontuacaoMaxima = perguntas.length * 10;
-  const foiPerfeito = pontuacao === pontuacaoMaxima;
+  const foiMuitoBem = pontuacao >= 700;
 
   return (
     <div className="relative h-screen flex items-center justify-center overflow-hidden text-white">
@@ -82,20 +93,55 @@ export default function Fim({ pontuacao, reiniciar }) {
           <h2 className="text-sm text-gray-400 mb-2">🏆 Ranking</h2>
 
           <div className="flex flex-col gap-2">
-            {rankingLista.map((jogador, index) => (
-              <div
-                key={index}
-                className={`flex justify-between px-3 py-2 rounded-lg text-sm transition-all ${jogador.nome === usuarioAtual ? "bg-cyan-500/20 border border-cyan-400 shadow-md shadow-cyan-400/20" : "bg-white/5"}`}
-              >
-                <span className="text-gray-300">
-                  {index + 1}. {jogador.nome}
-                </span>
+            {carregando ? (
+              <p className="text-gray-400 text-sm text-center">
+                Atualizando ranking...
+              </p>
+            ) : rankingLista.length > 0 ? (
+              rankingLista.slice(0, 10).map((jogador, index) => {
+                const medalha =
+                  index === 0
+                    ? "🥇"
+                    : index === 1
+                      ? "🥈"
+                      : index === 2
+                        ? "🥉"
+                        : `${index + 1}.`;
 
-                <span className="text-cyan-400 font-semibold">
-                  {jogador.pontuacao}
-                </span>
-              </div>
-            ))}
+                const destaque =
+                  index === 0
+                    ? "bg-yellow-400/20 border border-yellow-400 shadow-yellow-400/30"
+                    : index === 1
+                      ? "bg-gray-300/20 border border-gray-300 shadow-gray-300/30"
+                      : index === 2
+                        ? "bg-orange-400/20 border border-orange-400 shadow-orange-400/30"
+                        : "bg-white/5";
+
+                return (
+                  <div
+                    key={index}
+                    className={`flex justify-between px-3 py-2 rounded-lg text-sm transition-all ${destaque} ${
+                      jogador.nome === usuarioAtual
+                        ? "ring-2 ring-cyan-400"
+                        : ""
+                    }`}
+                  >
+                    <span className="text-gray-300 flex items-center gap-2">
+                      <span>{medalha}</span>
+                      {jogador.nome}
+                    </span>
+
+                    <span className="text-cyan-400 font-semibold">
+                      {jogador.pontuacao}
+                    </span>
+                  </div>
+                );
+              })
+            ) : (
+              <p className="text-gray-400 text-sm text-center">
+                Nenhum jogador no ranking ainda.
+              </p>
+            )}
           </div>
         </div>
 
@@ -108,13 +154,13 @@ export default function Fim({ pontuacao, reiniciar }) {
           Jogar Novamente
         </motion.button>
 
-        {foiPerfeito && (
+        {foiMuitoBem && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             className="text-yellow-400 text-sm mt-2"
           >
-            🏆 Pontuação máxima!
+            🔥 Excelente desempenho!
           </motion.div>
         )}
       </motion.div>

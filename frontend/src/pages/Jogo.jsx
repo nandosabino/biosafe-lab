@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import ProgressBar from "../components/ProgressBar";
 import { perguntas } from "../data/perguntas";
+import { salvarRankingAPI } from "../services/api";
 import { embaralhar } from "../utils/embaralhar";
 
 function embaralharPergunta(p) {
@@ -145,7 +146,13 @@ export default function Jogo({ finalizar }) {
 
       const finalScore = pontuacao;
 
-      setTimeout(() => {
+      setTimeout(async () => {
+        const nome = localStorage.getItem("usuario");
+
+        if (nome) {
+          await salvarRankingAPI(nome, finalScore);
+        }
+
         finalizar(finalScore);
       }, 1000);
     }
