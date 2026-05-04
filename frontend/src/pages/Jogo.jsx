@@ -36,8 +36,23 @@ export default function Jogo({ finalizar }) {
   const [tempo, setTempo] = useState(TEMPO_MAX);
 
   useEffect(() => {
-    const perguntasAleatorias = embaralhar(perguntas).map(embaralharPergunta);
-    setPerguntasJogo(perguntasAleatorias);
+    const faceis = embaralhar(
+      perguntas.filter((p) => p.dificuldade === "facil"),
+    ).slice(0, 10);
+
+    const medias = embaralhar(
+      perguntas.filter((p) => p.dificuldade === "medio"),
+    ).slice(0, 10);
+
+    const dificeis = embaralhar(
+      perguntas.filter((p) => p.dificuldade === "dificil"),
+    ).slice(0, 10);
+
+    const selecionadas = embaralhar([...faceis, ...medias, ...dificeis]).map(
+      embaralharPergunta,
+    );
+
+    setPerguntasJogo(selecionadas);
   }, []);
 
   // 🧠 RESET CORRETO A CADA NOVA PERGUNTA (FIX DO BUG)
@@ -102,7 +117,16 @@ export default function Jogo({ finalizar }) {
     }, 300);
 
     if (i === correta) {
-      setPontuacao((p) => p + 10);
+      const pontosPorDificuldade = {
+        facil: 10,
+        medio: 20,
+        dificil: 30,
+      };
+
+      const pontosBase = pontosPorDificuldade[perguntaAtual.dificuldade] || 10;
+      const bonusTempo = tempo;
+
+      setPontuacao((p) => p + pontosBase + bonusTempo);
     }
   }
 
