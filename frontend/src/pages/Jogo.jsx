@@ -164,7 +164,7 @@ export default function Jogo({ finalizar }) {
   }
 
   return (
-    <div className="relative h-screen flex items-center justify-center overflow-hidden">
+    <div className="relative min-h-screen flex items-center justify-center overflow-hidden py-6">
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: "url('/lab-bg.jpg')" }}
@@ -172,7 +172,7 @@ export default function Jogo({ finalizar }) {
       <div className="absolute inset-0 bg-gradient-to-br from-blue-900/30 via-black/50 to-cyan-900/30" />
 
       <motion.div
-        className="w-full max-w-xs px-3 relative"
+        className="w-full max-w-sm px-3 relative"
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: saindo ? 0 : 1, scale: saindo ? 0.95 : 1 }}
         transition={{ duration: 0.5, ease: "easeInOut" }}
@@ -188,7 +188,7 @@ export default function Jogo({ finalizar }) {
           </p>
         </div>
 
-        <div className="bg-white/10 backdrop-blur-2xl border border-white/20 shadow-[0_0_40px_rgba(0,255,255,0.1)] p-4 pb-10 rounded-3xl flex flex-col gap-4 mt-12">
+        <div className="bg-white/10 backdrop-blur-2xl border border-white/20 shadow-[0_0_40px_rgba(0,255,255,0.1)] p-4 rounded-3xl flex flex-col gap-4 mt-12 max-h-[78vh] overflow-y-auto">
           <motion.h2
             key={indice}
             initial={{ opacity: 0, y: 10 }}
