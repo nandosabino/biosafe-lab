@@ -64,6 +64,10 @@ export default function Jogo({ finalizar }) {
 
   const autoAvancoRef = useRef(null);
 
+  const tempoEsgotado = respostaSelecionada === -1;
+  const mostrarFeedback = mostrarResposta || tempoEsgotado;
+  const bloqueado = mostrarFeedback || saindo;
+
   useEffect(() => {
     if (!mostrarFeedback || saindo) return;
 
@@ -124,10 +128,6 @@ export default function Jogo({ finalizar }) {
   }
 
   const pergunta = perguntasJogo[indice];
-
-  const tempoEsgotado = respostaSelecionada === -1;
-  const mostrarFeedback = mostrarResposta || tempoEsgotado;
-  const bloqueado = mostrarFeedback || saindo;
 
   if (saindo) {
     return (
